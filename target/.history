@@ -1,9 +1,0 @@
-show name
-show version
-show scalaVersion
-comp
-compile
-exit
-session save
-set version := 1.0 SNAPSHOT
-exit

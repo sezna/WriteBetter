@@ -1,7 +1,7 @@
 import scala.io.Source
 
 object AuthorLookup {
-  def main(args:Array[String]) {
+  def main(args: Array[String]) {
     println("The AuthorLookup is running")
     val text = readFile("Charles Dickens")
     val matches = wordLookup("the", text._2)
@@ -20,25 +20,25 @@ object AuthorLookup {
     }
 
   }
-  def wordLookup(word: String, text: String):Array[String] = {
+  def wordLookup(word: String, text: String): Array[String] = {
     val textSplit = text.split(' ')
-    var toReturn:Array[String] = Array()
-      for (i <- 0 until textSplit.length) {
-        if (textSplit(i) == word) {
-          if (i < textSplit.length - 1) toReturn :+= textSplit(i + 1)
-          if (i > 0) toReturn :+= textSplit(i - 1)
-        }
+    var toReturn: Array[String] = Array()
+    for (i <- 0 until textSplit.length) {
+      if (textSplit(i) == word) {
+        if (i < textSplit.length - 1) toReturn :+= textSplit(i + 1)
+        if (i > 0) toReturn :+= textSplit(i - 1)
       }
-      toReturn
+    }
+    toReturn
   }
-  def readFile(author: String):(String, String) = {
+  def readFile(author: String): (String, String) = {
     /* TODO make this read multiple books and return them in an array instead of a single tuple */
-    val text = Source.fromFile("AuthorFiles/" + author.replace(' ', '_')).getLines.toList 
+    val text = Source.fromFile("AuthorFiles/" + author.replace(' ', '_')).getLines.toList
     (text(0), text(1)) // (Title, Text)
   }
   /**
    * Write to an author file. Should be an entire text with a title.
    */
   def writeFile(toWrite: String) {}
-  
+
 }

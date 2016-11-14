@@ -14,7 +14,7 @@ object Thesaurus {
       val (part, designation, word) = (splitLine(0), splitLine(1), splitLine(2))
       if (designation == "syn" ) {
         if (inputPart != "") {
-          if (inputPart == part) { toReturn :+= word }
+          if (inputPart == part) toReturn :+= word 
         }
         else toReturn :+= word
       }

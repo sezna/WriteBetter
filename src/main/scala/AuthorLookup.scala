@@ -3,8 +3,7 @@ import scala.io.Source
 object AuthorLookup {
   def main(args: Array[String]) {
     println("The AuthorLookup is running")
-    val text = readFile("Charles Dickens")
-    val matches = wordLookup("the", text._2)
+    val matches = findUsage("the", "is", "Charles Dickens")
     matches.foreach(x => println(x))
   }
   /**
@@ -12,13 +11,25 @@ object AuthorLookup {
    *
    * TBD: look up word here or return some data structure that is handled in another function?
    */
-  def findUsage(beforeWord: String, word: String, afterWord: String, author: String) {
-    val text = readFile(author).split(' ')
+  def findUsage(beforeWord: String, afterWord: String, author: String): Array[(String, Double, String)] = { // (word, match %, context sentence)
+    // TODO context sentences
+    val text = readFile(author)._2.split(' ')
+    var toReturn: Array[(String, Double, String)] = Array()
     for (i <- 0 until text.length) {
-      if (text(i) == word && i > 0 && text(i - 1) == beforeWord) { /* do something */ }
-      if (text(i) == word && text(i + 1) == afterWord) { /* do something */ }
+      if (text(i) == beforeWord && i < text.length - 1) {
+        if (i < text.length + 2 && text(i + 2) == afterWord) {
+          // case that beforeWord and afterWord are matched
+          toReturn :+= (text(i + 1), 1.0, "")
+        }
+        // case that only beforeWord is matched
+        toReturn :+= (text(i + 1), 0.5, "")
+      }
+      if (i > 2 && text(i) == afterWord && text(i - 2) != beforeWord) {
+        // case that only afterWord is matched
+        toReturn :+= (text(i - 1), 0.5, "")
+      }
     }
-
+    toReturn
   }
   def wordLookup(word: String, text: String): Array[String] = {
     val textSplit = text.split(' ')

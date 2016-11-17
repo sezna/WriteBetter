@@ -1,11 +1,8 @@
+package WriteBetter
 import scala.io.Source
 
-object AuthorLookup {
-  def main(args: Array[String]) {
-    println("The AuthorLookup is running")
-    val matches = findUsage("the", "is", "Charles Dickens")
-    matches.foreach(x => println(x))
-  }
+class AuthorLookup {
+
   /**
    * Read an author file. Input is an author name and a word you are looking for.
    *

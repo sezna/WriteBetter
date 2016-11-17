@@ -1,11 +1,10 @@
+package WriteBetter
+import WriteBetter._
 import scala.io.Source
 /**
  * This object is used to access the BigHugeLabs thesaurus API.
  */
-object Thesaurus {
-  def main(args: Array[String]) {
-    println("The thesaurus is running")
-  }
+class Thesaurus {
   def getSynonyms(inputWord: String, inputPart: String = ""): Array[String] = {
     val entry = getThesaurusEntry(inputWord)
     var toReturn: Array[String] = Array()

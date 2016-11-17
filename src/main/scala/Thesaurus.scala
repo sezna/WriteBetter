@@ -20,6 +20,13 @@ class Thesaurus {
     toReturn
   }
   def getThesaurusEntry(word: String): Array[String] = {
-    Source.fromURL("http://words.bighugelabs.com/api/2/9a0d1e46117e2bdb3bf6e1a1568faa3e/" + word + "/utf-8").mkString.split("\n")
+    var toReturn:Array[String] = Array()
+    try {
+    toReturn = Source.fromURL("http://words.bighugelabs.com/api/2/9a0d1e46117e2bdb3bf6e1a1568faa3e/" + word.replaceAll("""[\p{Punct}]""", "") + "/utf-8").mkString.split("\n")
+    }
+    catch {
+      case e: Exception => {} 
+    }
+    toReturn
   }
 }

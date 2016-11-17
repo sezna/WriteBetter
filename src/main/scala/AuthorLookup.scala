@@ -13,7 +13,7 @@ class AuthorLookup {
     val text = readFile(author)._2.split(' ')
     var toReturn: Array[(String, Double, String)] = Array()
     for (i <- 0 until text.length) {
-      if (text(i) == beforeWord && i < text.length - 1) {
+      if (text(i) == beforeWord && i < text.length - 1 && !toReturn.contains(text(i + 1), 1.0, "") && !toReturn.contains(text(i + 1), 0.5, "")) {
         if (i < text.length + 2 && text(i + 2) == afterWord) {
           // case that beforeWord and afterWord are matched
           toReturn :+= (text(i + 1), 1.0, "")
@@ -21,7 +21,7 @@ class AuthorLookup {
         // case that only beforeWord is matched
         toReturn :+= (text(i + 1), 0.5, "")
       }
-      if (i > 2 && text(i) == afterWord && text(i - 2) != beforeWord) {
+      if (i > 2 && text(i) == afterWord && text(i - 2) != beforeWord && !toReturn.contains(text(i - 1), 1.0, "") && !toReturn.contains(text(i - 1), 0.5, "")) {
         // case that only afterWord is matched
         toReturn :+= (text(i - 1), 0.5, "")
       }

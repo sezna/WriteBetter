@@ -1,7 +1,10 @@
 package WriteBetter
 
+// TODO
+// I am getting the same word "test" with different results from the thesaurus.
+
 object Main extends App {
-  val text = "This is a test. I want to test out this function so I would like to use a thesaurus to do this. A tall cat. A lively dog. A purple man. A tall man.".split(' ').toArray
+  val text = "This is a test. I want to test out this function so I would like to use a thesaurus to do this. A tall cat. A lively dog. A purple man. A tall man.".replaceAll("""[\p{Punct}]""", "").split(' ').toArray
   println("real main function")
   val thesaurus = new Thesaurus()
   val authorlookup = new AuthorLookup()

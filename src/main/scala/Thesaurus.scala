@@ -14,7 +14,7 @@ class Thesaurus {
       if (designation == "syn") {
         if (inputPart != "") {
           if (inputPart == part) toReturn :+= word
-        } else toReturn :+= word
+        } else toReturn :+= word.replaceAll("""[\p{Punct}]""", "")
       }
     }
     toReturn
@@ -22,7 +22,7 @@ class Thesaurus {
   def getThesaurusEntry(word: String): Array[String] = {
     var toReturn:Array[String] = Array()
     try {
-    toReturn = Source.fromURL("http://words.bighugelabs.com/api/2/9a0d1e46117e2bdb3bf6e1a1568faa3e/" + word.replaceAll("""[\p{Punct}]""", "") + "/utf-8").mkString.split("\n")
+    toReturn = Source.fromURL("http://words.bighugelabs.com/api/2/9a0d1e46117e2bdb3bf6e1a1568faa3e/" + word + "/utf-8").mkString.split("\n")
     }
     catch {
       case e: Exception => {} 

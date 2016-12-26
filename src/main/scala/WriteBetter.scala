@@ -4,27 +4,22 @@ package WriteBetter
 // I am getting the same word "test" with different results from the thesaurus.
 
 object Main extends App {
-  val text = "This is a test. I want to test out this function so I would like to use a thesaurus to do this. A tall cat. A lively dog. A purple man. A tall man.".replaceAll("""[\p{Punct}]""", "").split(' ').toArray
-  println("real main function")
+  val text = "This is a test. I want to test out this function so I would like to use a thesaurus to do this. A tall cat. A lively dog. A purple man. A tall man.".replaceAll("""[\p{Punct}]""", "").split(' ').toArray.distinct
   val thesaurus = new Thesaurus()
   val authorlookup = new AuthorLookup()
-  var substitutions:Array[(String, Array[String])] = Array()
   for (i <- 1 until text.length - 1) {
-    var candidates: Array[String] = Array()
     val synonyms = thesaurus.getSynonyms(text(i))
+		// usages is an array of (replacement word, match percentage, context string)
     val usages = authorlookup.findUsage(text(i - 1), text(i + 1), "Charles Dickens")
+		var toprint:Array[String] = Array()	
     for (usage <- usages) {
       if (synonyms.contains(usage._1)) {
-        candidates :+= usage._1
+				toprint :+= (usage._1 + "(" + usage._2 + "): " + usage._3)
       }
     }
-  substitutions :+= (text(i), candidates)
+		if (toprint.length > 0) {
+			println("Perhaps you want to substitute \"" + text(i) + "\" for: ")
+			toprint.foreach(println(_))	
+		}
   } 
-  def finalprint(word: String, subs: Array[String]) {
-    if (subs.length > 0) {
-    println("Perhaps you want to substitute " + word + " for:")
-    subs.foreach(println(_))
-    }
-  }
-  substitutions.foreach(x => finalprint(x._1, x._2))
 }
